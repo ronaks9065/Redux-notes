@@ -52,37 +52,62 @@ const NoteApp = () => {
     handleCloseUpdateDialog();
   };
 
-  const handleDeleteNote = (id) => {
-    if (window.confirm("Are you sure you want to delete this note?")) {
+  const handleDeleteNote = (id, text) => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this '" + text + "' note?"
+      )
+    ) {
       dispatch(deleteNote(id));
     }
   };
 
   return (
-    <Container maxWidth="sm" className="NoteAppContainer">
+    <Container
+      maxWidth="md"
+      sx={{ padding: { xs: 2, md: 4 } }}
+      className="NoteAppContainer"
+    >
       <Typography variant="h4" align="center" gutterBottom>
-        Note App
+        Redux Note App
       </Typography>
       <List>
         {notes.map((note) => (
-          <ListItem className="list-item" key={note.id}>
-            <Grid container spacing={20}>
-              <Grid item xs={6} md={8} className="grid-item-main">
-                <div>{note.text}</div>
-              </Grid>
-              <Grid item xs={6} md={4} className="grid-item-actions">
-                <div>
-                  <IconButton
-                    onClick={() => handleOpenUpdateDialog(note.id, note.text)}
-                  >
-                    <Edit />
-                  </IconButton>
-                  <IconButton onClick={() => handleDeleteNote(note.id)}>
-                    <Delete />
-                  </IconButton>
-                </div>
-              </Grid>
-            </Grid>
+          <ListItem
+            className="list-item"
+            key={note.id}
+            sx={{
+              border: "1px solid #ddd",
+              borderRadius: 8,
+              marginBottom: 2,
+              padding: 2,
+              backgroundColor: "#fff",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ flex: 1, marginRight: 2, overflowWrap: "break-word" }}
+            >
+              {note.text}
+            </Typography>
+            <div className="grid-item-actions">
+              <IconButton
+                onClick={() => handleOpenUpdateDialog(note.id, note.text)}
+                title="Edit Note"
+                sx={{ marginRight: 1 }}
+              >
+                <Edit />
+              </IconButton>
+              <IconButton
+                onClick={() => handleDeleteNote(note.id, note.text)}
+                title="Delete Note"
+              >
+                <Delete />
+              </IconButton>
+            </div>
           </ListItem>
         ))}
       </List>
@@ -107,7 +132,17 @@ const NoteApp = () => {
         </Button>
       </div>
 
-      <Dialog open={isUpdateDialogOpen} onClose={handleCloseUpdateDialog}>
+      <Dialog
+        open={isUpdateDialogOpen}
+        onClose={handleCloseUpdateDialog}
+        PaperProps={{
+          elevation: 4,
+          style: {
+            minWidth: 300,
+            padding: 16,
+          },
+        }}
+      >
         <DialogTitle className="DialogTitle">Edit Note</DialogTitle>
         <DialogContent>
           <TextField
@@ -119,11 +154,21 @@ const NoteApp = () => {
             fullWidth
             value={updatedNoteText}
             onChange={(e) => setUpdatedNoteText(e.target.value)}
+            variant="outlined"
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseUpdateDialog}>Cancel</Button>
-          <Button onClick={handleUpdateNote} color="primary">
+          <Button onClick={handleCloseUpdateDialog} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleUpdateNote}
+            color="primary"
+            variant="contained"
+          >
             Save
           </Button>
         </DialogActions>
