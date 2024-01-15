@@ -26,11 +26,14 @@ const NoteApp = () => {
   const [isUpdateDialogOpen, setUpdateDialogOpen] = useState(false);
   const [updateNoteId, setUpdateNoteId] = useState("");
   const [updatedNoteText, setUpdatedNoteText] = useState("");
+  const [newNoteError, setNewNoteError] = useState("");
+  const [updatedNoteError, setUpdatedNoteError] = useState("");
 
   const handleAddNote = () => {
     if (newNote.trim() === "") {
-      alert("Please enter some note name first");
+      setNewNoteError("Please enter some note name");
     } else {
+      setNewNoteError("");
       dispatch(addNote({ id: Date.now(), text: newNote }));
       setNewNote("");
     }
@@ -47,8 +50,13 @@ const NoteApp = () => {
   };
 
   const handleUpdateNote = () => {
-    dispatch(updateNote(updateNoteId, { text: updatedNoteText }));
-    handleCloseUpdateDialog();
+    if (updatedNoteText.trim() === "") {
+      setUpdatedNoteError("Please enter some note name");
+    } else {
+      setUpdatedNoteError("");
+      dispatch(updateNote(updateNoteId, { text: updatedNoteText }));
+      handleCloseUpdateDialog();
+    }
   };
 
   const handleDeleteNote = (id, text) => {
@@ -119,6 +127,14 @@ const NoteApp = () => {
           label="Add a new note"
           fullWidth
         />
+        {newNoteError && (
+          <div
+            style={{ color: "red", textAlign: "left" }}
+            className="error-message"
+          >
+            {newNoteError}
+          </div>
+        )}
         <Button
           onClick={handleAddNote}
           variant="contained"
@@ -158,6 +174,14 @@ const NoteApp = () => {
               shrink: true,
             }}
           />
+          {updatedNoteError && (
+            <div
+              style={{ color: "red", textAlign: "left" }}
+              className="error-message"
+            >
+              {updatedNoteError}
+            </div>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseUpdateDialog} color="primary">
