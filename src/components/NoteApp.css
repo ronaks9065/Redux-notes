@@ -1,0 +1,42 @@
+.list-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.DialogTitle {
+    background-color: #1976D2;
+    color: #fff;
+}
+
+.DialogContent,
+.DialogActions {
+    padding: 15px;
+}
+
+.Button {
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+.AddNoteContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.NoteInput {
+    margin-bottom: 10px;
+}
+
+.Button {
+    margin-top: 10px !important;
+}
+
+.do-end {
+    flex: end;
+}
