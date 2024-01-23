@@ -70,133 +70,135 @@ const NoteApp = () => {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      sx={{ padding: { xs: 2, md: 4 } }}
-      className="NoteAppContainer"
-    >
-      <Typography variant="h4" align="center" gutterBottom>
-        Redux Note App
-      </Typography>
-      <List>
-        {notes.map((note) => (
-          <ListItem
-            className="list-item"
-            key={note.id}
-            sx={{
-              border: "1px solid #ddd",
-              borderRadius: 8,
-              marginBottom: 2,
-              padding: 2,
-              backgroundColor: "#fff",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="body1"
-              sx={{ flex: 1, marginRight: 2, overflowWrap: "break-word" }}
-            >
-              {note.text}
-            </Typography>
-            <div className="grid-item-actions">
-              <IconButton
-                onClick={() => handleOpenUpdateDialog(note.id, note.text)}
-                title="Edit Note"
-                sx={{ marginRight: 1 }}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton
-                onClick={() => handleDeleteNote(note.id, note.text)}
-                title="Delete Note"
-              >
-                <Delete />
-              </IconButton>
-            </div>
-          </ListItem>
-        ))}
-      </List>
-      <div className="AddNoteContainer">
-        <TextField
-          type="text"
-          value={newNote}
-          onChange={(e) => setNewNote(e.target.value)}
-          className="NoteInput"
-          label="Add a new note"
-          fullWidth
-        />
-        {newNoteError && (
-          <div
-            style={{ color: "red", textAlign: "left" }}
-            className="error-message"
-          >
-            {newNoteError}
-          </div>
-        )}
-        <Button
-          onClick={handleAddNote}
-          variant="contained"
-          color="primary"
-          className="Button"
-          size="medium"
-          fullWidth
-        >
-          Add Note
-        </Button>
-      </div>
-
-      <Dialog
-        open={isUpdateDialogOpen}
-        onClose={handleCloseUpdateDialog}
-        PaperProps={{
-          elevation: 4,
-          style: {
-            minWidth: 300,
-            padding: 16,
-          },
-        }}
+    <div data-testid="test-1">
+      <Container
+        maxWidth="md"
+        sx={{ padding: { xs: 2, md: 4 } }}
+        className="NoteAppContainer"
       >
-        <DialogTitle className="DialogTitle">Edit Note</DialogTitle>
-        <DialogContent>
+        <Typography variant="h4" align="center" gutterBottom>
+          Redux Note App
+        </Typography>
+        <List>
+          {notes.map((note) => (
+            <ListItem
+              className="list-item"
+              key={note.id}
+              sx={{
+                border: "1px solid #ddd",
+                borderRadius: 8,
+                marginBottom: 2,
+                padding: 2,
+                backgroundColor: "#fff",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{ flex: 1, marginRight: 2, overflowWrap: "break-word" }}
+              >
+                {note.text}
+              </Typography>
+              <div className="grid-item-actions">
+                <IconButton
+                  onClick={() => handleOpenUpdateDialog(note.id, note.text)}
+                  title="Edit Note"
+                  sx={{ marginRight: 1 }}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  onClick={() => handleDeleteNote(note.id, note.text)}
+                  title="Delete Note"
+                >
+                  <Delete />
+                </IconButton>
+              </div>
+            </ListItem>
+          ))}
+        </List>
+        <div data-testid="test-2" className="AddNoteContainer">
           <TextField
-            autoFocus
-            margin="dense"
-            id="updatedNoteText"
-            label="Updated Note"
             type="text"
+            value={newNote}
+            onChange={(e) => setNewNote(e.target.value)}
+            className="NoteInput"
+            label="Add a new note"
             fullWidth
-            value={updatedNoteText}
-            onChange={(e) => setUpdatedNoteText(e.target.value)}
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
-          {updatedNoteError && (
+          {newNoteError && (
             <div
               style={{ color: "red", textAlign: "left" }}
               className="error-message"
             >
-              {updatedNoteError}
+              {newNoteError}
             </div>
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseUpdateDialog} color="primary">
-            Cancel
-          </Button>
           <Button
-            onClick={handleUpdateNote}
-            color="primary"
+            onClick={handleAddNote}
             variant="contained"
+            color="primary"
+            className="Button"
+            size="medium"
+            fullWidth
           >
-            Save
+            Add Note
           </Button>
-        </DialogActions>
-      </Dialog>
-    </Container>
+        </div>
+
+        <Dialog
+          open={isUpdateDialogOpen}
+          onClose={handleCloseUpdateDialog}
+          PaperProps={{
+            elevation: 4,
+            style: {
+              minWidth: 300,
+              padding: 16,
+            },
+          }}
+        >
+          <DialogTitle className="DialogTitle">Edit Note</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="updatedNoteText"
+              label="Updated Note"
+              type="text"
+              fullWidth
+              value={updatedNoteText}
+              onChange={(e) => setUpdatedNoteText(e.target.value)}
+              variant="outlined"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            {updatedNoteError && (
+              <div
+                style={{ color: "red", textAlign: "left" }}
+                className="error-message"
+              >
+                {updatedNoteError}
+              </div>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseUpdateDialog} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={handleUpdateNote}
+              color="primary"
+              variant="contained"
+            >
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
+    </div>
   );
 };
 
