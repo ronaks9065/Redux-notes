@@ -86,7 +86,7 @@ const NoteApp = () => {
               key={note.id}
               sx={{
                 border: "1px solid #ddd",
-                borderRadius: 8,
+                borderRadius: 2,
                 marginBottom: 2,
                 padding: 2,
                 backgroundColor: "#fff",
