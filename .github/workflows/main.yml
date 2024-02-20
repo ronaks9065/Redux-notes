@@ -1,0 +1,37 @@
+name: CI
+
+on: push
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: ESLint
+        run: |
+          npm install eslint --save-dev
+          npm run lint
+          npx eslint --max-warnings=40 "src/**/*.js" "."
+        
+      - name: Prettier
+        run: npm run prettier
+
+      - name: Build
+        run: npm run build
+
+      - name: Test and Coverage
+        run: |
+          npm install --save-dev nyc
+          npx nyc npm test
+          npm run cypress
